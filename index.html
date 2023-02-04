@@ -25,8 +25,8 @@
             </div>
             <div class="button-container">
                 <button id="rockBtn" style="display: none">Rock</button>
-                <button id="scissBtn" style="display: none">Paper</button>
-                <button id="paperBtn" style="display: none">Scissors</button>
+                <button id="paperBtn" style="display: none">Paper</button>
+                <button id="scissBtn" style="display: none">Scissors</button>
             </div>
             <div class="score-announcement">
                 <div class="announcement"></div>
@@ -35,8 +35,12 @@
                     <div class="computer-score">Computer Score: 0</div>
                 </div>
             </div>
+            <div class="turn-signal">
+                <div class="player-one-turn"></div>
+                <div class="player-two-turn"></div>
+            </div>
             <div class="reset-button">
-                <button id="resetBtn">Reset</button>
+                <button id="resetBtn" onclick="resetGame()">Reset</button>
             </div>
         </div>
     </div>

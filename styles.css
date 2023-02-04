@@ -1,5 +1,102 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     margin: 0;
     box-sizing: border-box;
 }
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 2.5vh;
+    font-size: larger;
+}
+
+.game-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.vs-options>button,
+.button-container>button {
+    padding: 20px;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    margin: 5vh;
+    width: 15vw;
+    height: 15vw;
+}
+.vs-options>button:hover {
+    animation: rotation 5s infinite linear;
+    background-color: rgb(50, 50, 50);
+}
+.vs-options>button:focus {
+    animation: rotation 5s infinite linear;
+    background-color: rgb(50, 50, 50);
+}
+
+.button-container {
+    display: flex;
+}
+
+.score {
+    display: flex;
+    width: 50vw;
+    justify-content: space-around;
+}
+
+#resetBtn {
+    margin: 4vh;
+    width: 20vw;
+    height: 15vh;
+}
+
+
+
+
+
+
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    33% {
+        transform: rotate(45deg);
+    }
+    66% {
+        transform: rotate(-45deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes disappear {
+    from {
+        opacity: 100%;
+    } to {
+        opacity: 0%;
+        display: none;
+    }
+}
+
+
+
+

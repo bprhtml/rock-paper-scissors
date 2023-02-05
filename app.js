@@ -1,25 +1,35 @@
 // DOM
+const bigBertha = document.querySelector('.game-container')
 const vsPlayerBtn = document.getElementById('vsPlayer');
 const vsCompBtn = document.getElementById('vsComp');
 const resetBtn = document.getElementById('resetBtn');
 const rockBtn = document.getElementById('rockBtn');
 const paperBtn = document.getElementById('paperBtn');
 const scissBtn = document.getElementById('scissBtn');
-
+const btnCont = document.querySelector('.button-container')
+const scoreArea = document.querySelector('.score');
 const leftScore = document.querySelector('.player-score');
 const rightScore = document.querySelector('.computer-score');
 const leftTurnDisplay = document.querySelector('.player-one-turn')
 const rightTurnDisplay = document.querySelector('.player-two-turn')
 const announcementText = document.querySelector('.announcement');
+const playAgainButton = document.createElement('button');
+playAgainButton.innerHTML = "Play again?";
+playAgainButton.classList.add('play-again')
+const winnerAnnouncement = document.createElement('div')
+winnerAnnouncement.classList.add('winner-announcement')
+var gameInProgress = false;
 let turn = 0;
 let leftCounter = 0;
 let rightCounter = 0;
 let roundArray = [];
 let leftName = 'Ben'
 let rightName = 'James'
+let leftPlayerScore = 0;
+let rightPlayerScore = 0;
 
 vsPlayerBtn.addEventListener('click', () => {
-    vsCompBtn.style.display = "none";
+    vsCompBtn.style.visibility = "hidden";
     rockBtn.style.display = "block"; 
     paperBtn.style.display = "block";
     scissBtn.style.display = "block";
@@ -58,6 +68,11 @@ function playerGame() {
     })
 }
 function vsComputerGame() {
+    if (leftCounter < 5 || rightCounter < 5) {
+        gameInProgress = true;
+    } else {
+        gameInProgress = false;
+    }
     rockBtn.addEventListener('click', () => {
         computerChoice();
         turn++;
@@ -82,7 +97,7 @@ function vsComputerGame() {
 }
 
 vsCompBtn.addEventListener('click', () => {
-    vsPlayerBtn.style.display = "none";
+    vsPlayerBtn.style.visibility = "hidden";
     rockBtn.style.display = "block"; 
     paperBtn.style.display = "block";
     scissBtn.style.display = "block";
@@ -123,23 +138,38 @@ function winDetermination() {
     leftScore.innerHTML = `${leftName}'s score: ${leftCounter}`
     rightScore.innerHTML = `${rightName}'s score: ${rightCounter}`
     if (leftCounter == 5) {
-        alert(`${leftName} wins!`)
+        winnerAnnouncement.innerHTML = `${leftName} wins! ${leftCounter} : ${rightCounter}`
+        leftPlayerScore++
         winnerCalled()
     } else if (rightCounter == 5) {
-        alert(`${rightName} wins!`)
+        winnerAnnouncement.innerHTML = `${rightName} wins! ${rightCounter} : ${leftCounter}`
+        rightTurnDisplay.style.visibility = "hidden"
+        leftTurnDisplay.style.visibility = "hidden"
         winnerCalled()
+        rightPlayerScore++
     }
+    scoreArea.appendChild(winnerAnnouncement)
 }
 
 function turnSignal() {
-    if (turn % 2 != 0) {
+
+    if (leftCounter == 5) {
         leftTurnDisplay.style.visibility = "hidden"
-        rightTurnDisplay.style.visibility = "visible"
-    } else if (turn % 2 == 0) {
-        leftTurnDisplay.style.visibility = "visible"
         rightTurnDisplay.style.visibility = "hidden"
+    } else if (rightCounter == 5) {
+        leftTurnDisplay.style.visibility = "hidden"
+        rightTurnDisplay.style.visibility = "hidden"
+    } else {
+        if (turn % 2 != 0) {
+            leftTurnDisplay.style.visibility = "hidden"
+            rightTurnDisplay.style.visibility = "visible"
+        } else if (turn % 2 == 0) {
+            leftTurnDisplay.style.visibility = "visible"
+            rightTurnDisplay.style.visibility = "hidden"
+        } 
     }
 }
+
 
 function computerWinDetermination() {
     if (turn % 3 == 0) {
@@ -150,24 +180,33 @@ function computerWinDetermination() {
     leftScore.innerHTML = `${leftName}'s score: ${leftCounter}`
     rightScore.innerHTML = `${rightName}'s score: ${rightCounter}`
     if (leftCounter == 5) {
-        alert(`${leftName} wins!`)
+        winnerAnnouncement.innerHTML = `${leftName} wins! ${leftCounter} : ${rightCounter}`
+        leftPlayerScore++
         winnerCalled()
     } else if (rightCounter == 5) {
-        alert(`${rightName} wins!`)
+        winnerAnnouncement.innerHTML = `${rightName} wins! ${rightCounter} : ${leftCounter}`
+        rightTurnDisplay.style.visibility = "hidden"
+        leftTurnDisplay.style.visibility = "hidden"
         winnerCalled()
+        rightPlayerScore++
     }
+    scoreArea.appendChild(winnerAnnouncement)
 }
 
 function winnerCalled() {
-    leftScore.innerHTML = ''
-    rightScore.innerHTML = ''
-    rockBtn.style.visibility = 'hidden'
-    paperBtn.style.visibility = 'hidden'
-    scissBtn.style.visibility = 'hidden'
-    leftTurnDisplay.innerHTML = ''
-    rightTurnDisplay.style.visibility = 'visible'
-    resetBtn.style.width = '100vw'
-    resetBtn.style.height = '100vh'
+    announcementText.style.display = "none"
+    vsCompBtn.style.visibility = "hidden"
+    vsPlayerBtn.style.visibility = "hidden"
+    leftScore.style.display = "none"
+    rightScore.style.display = "none"
+    rockBtn.style.display = "none"
+    paperBtn.style.display = "none"
+    scissBtn.style.display = "none"
+    rightTurnDisplay.style.display = "none"
+    leftTurnDisplay.style.display = "none"
+    setTimeout(() => {
+        scoreArea.appendChild(playAgainButton)
+    }, 1100)
 }
 
 function winCombinations() {
@@ -198,6 +237,6 @@ function winCombinations() {
     } 
 }
 
-function resetGame() {
+playAgainButton.addEventListener('click', () => {
     location.reload()
-}
+})
